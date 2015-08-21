@@ -1,0 +1,50 @@
+<div class="container" style="margin-bottom:20px;">
+<!-- Search input -->
+  <form role="form" ng-submit="searchTopic()">
+    <div class="row">
+      <div class="input-group">
+        <input type="text" ng-model="query" placeholder="Enter movie name" class="form-control">
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-primary" value="Search">
+        </span>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" style="margin-bottom:20px;">
+  <!-- Search results list -->
+  <!--p> Search results for <b> {{query}} </b></p-->
+  <!--p class="form-group" ng-repeat="searchResult in searchResults">
+    <input type="text" ng-model="searchResult" class="form-control">
+  </p-->
+  <div ng-if="!details && firstSearch==='true'">
+      Loading results...
+  </div>
+  <div ng-if="details.Response==='True'">
+    <div class="w3-row w3-card-2">
+      <div class="w3-image w3-half fill"> <!-- ng-style="{'background-image':{{ details.Poster=='N/A' ? 'http://placehold.it/150x220&text=N/A' : 'http://imdb.wemakesites.net/api/1.0/img/?url='+details.Poster }}}"-->
+        <img ng-src="{{ details.Poster=='N/A' ? 'http://placehold.it/150x220&text=N/A' : 'http://imdb.wemakesites.net/api/1.0/img/?url='+details.Poster }}"/>
+      </div>
+      <div class="w3-half" style="padding:8px 8px;">
+        <h2><a href="http://imdb.com/title/{{ details.imdbID }}" target="_blank">{{ details.Title }}</a>, {{ details.Year }}</h2>
+        <p><strong>Released on:</strong> {{ details.Released }} ({{ details.Runtime }})</p>
+
+        <p>{{ details.Plot }}</p>
+        
+        <ash-extrainfo ></ash-extrainfo>
+        
+        <p>
+          <strong>Ratings:</strong>
+          <br>
+          IMDb Rating: <span class="label label-success">{{ details.imdbRating }}</span>
+          <br>
+          Rotten Tomatoes: <span class="label label-success">{{ details.tomatoRating }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div ng-if="details.Response==='False'">
+    No results found.
+  </div>
+</div>
